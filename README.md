@@ -2,8 +2,8 @@
 An API for creating, updating, deleting, and retrieving Data Descriptors
 
 Data Descriptor schema:
-
-{
+```
+    {
       "title" : "DataDescriptor",
       "description" : "Information needed to describe a piece of data",
       "type" : "object",
@@ -229,3 +229,4 @@ Data Descriptor schema:
       },
       "required" : [ "title", "license_rights", "license_permission" ]
     }
+```
