@@ -15,13 +15,29 @@ You can then go to localhost:5000/hello etc...
 ## Development
 Developing you have to rebuild and redeploy the container when you make changes. To make this easier you can use this chained command that stops the container instance, removes it, rebuilds the container and starts a new instance.
 
-Windows:
+### Windows:
 
-docker stop ddapi && docker build -t dd-api:latest . && docker rm ddapi && docker run -p 5000:5000 --name=ddapi dd-api:latest
+First time:
+```
+docker build -t dd-api:latest . && docker run -p 5000:5000 --name=ddapi dd-api:latest
+```
 
-Linux/Max:
+After that:
+```
+docker stop ddapi && docker rm ddapi && docker build -t dd-api:latest . && docker run -p 5000:5000 --name=ddapi dd-api:latest
+```
 
-docker stop ddapi ; docker build -t dd-api:latest . ; docker rm ddapi ; docker run -p 5000:5000 --name=ddapi dd-api:latest
+### Linux/Max:
+
+First time:
+```
+docker build -t dd-api:latest . ; docker run -p 5000:5000 --name=ddapi dd-api:latest
+```
+
+After that:
+```
+docker stop ddapi ; docker rm ddapi ; docker build -t dd-api:latest . ; docker run -p 5000:5000 --name=ddapi dd-api:latest
+```
 
 
 ## Running tests
@@ -31,13 +47,13 @@ docker stop ddapi ; docker build -t dd-api:latest . ; docker rm ddapi ; docker r
      "test_username" :"testusername",
      "test_password" :"testpassword"
  ```
-2.) Build the tapis/streams-api docker container:  
+2.) Build the dd-api docker container:  
 ```
 docker build -t dd-api:latest .
 ```
 3.) Build the test docker image:
 ```
-docker build -t dd-tests -f Dockerfile-tests .
+docker build -t dd-tests:latest -f Dockerfile-tests .
 ```
 4.) Run these tests using the built docker image:
 ```
