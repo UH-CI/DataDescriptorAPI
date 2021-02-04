@@ -1,0 +1,10 @@
+{
+  "service_name": "data_descriptor",
+  "tenants":["dev"],
+  "log_level": "DEBUG",
+  "show_traceback": false,
+  "local_dev":true,
+  "tapis_base_url":"https://dev.develop.tapis.io",
+  "test_username": "",
+  "test_password": ""
+}

@@ -1,0 +1,7 @@
+{
+  "$id": "http://github.com/UH-CI/DataDescriptorAPI/configschema.json",
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    
+  }
+}

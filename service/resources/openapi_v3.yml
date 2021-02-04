@@ -1,0 +1,652 @@
+openapi: 3.0.0
+info:
+  title: Sample Access Code Flow OAuth2 Project
+  description: This is an example of using OAuth2 Access Code Flow in a specification to describe security to your API.
+  version: 1.0.0
+servers:
+  - url: 'https://virtserver.swaggerhub.com/UH-CI/DataDescriptor/1.0.0'
+    description: SwaggerHub API Auto Mocking
+security:
+  - accessCode:
+      - read
+      - write
+tags:
+  - name: dd
+    description: All things Data Descriptor related
+paths:
+  /dd:
+    get:
+      tags:
+        - dd
+      summary: Retrieve Data Descriptors
+      description: Get a requested dd given search flags
+      parameters:
+        - name: q
+          in: query
+          description: The query to perform. Traditional MongoDB queries are supported
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '{"title":"PEARC2020 conference paper"}'
+        - name: search
+          in: query
+          description: Terms to search for in any of the DDs fields
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '{"title":"PEARC2020 conference paper"}'
+        - name: limit
+          in: query
+          description: The maximum number of results returned from this query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            example: 10
+        - name: offset
+          in: query
+          description: The number of results skipped in the result set returned from this query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            example: 5
+        - name: fields
+          in: query
+          description: a comma separated list of specific fields to return out of the selected DDs.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'description,title,subject'
+        - name: title
+          in: query
+          description: Return DDs with the given title
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: PEARC20 submitted paper
+        - name: description
+          in: query
+          description: Return DDs with the given description
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Scientific Data Annotation and Dissemination Using the Ike Wai Gateway to Manage Research Data
+        - name: organizationID
+          in: query
+          description: Return DDs that are associated with the given organization ID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 5866422989133976041-242ac1110-0001-012
+        - name: organizationName
+          in: query
+          description: Return DDs that are associated with the organization with the given name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'National Science Foundation EPSCoR Ike Wai: Securing Hawaii''s Future - award #1557349'
+        - name: creatorID
+          in: query
+          description: Return DDs that are associated with the given creator ID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 4798895188827368985-242ac1110-0001-012
+        - name: creatorName
+          in: query
+          description: 'Return DDs that are associated with the creator with the given full name.  Format should be: family, given'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'Cleveland, Sean'
+        - name: creatorFamilyName
+          in: query
+          description: Return DDs that are associated with the creator with the given last name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Cleveland
+        - name: creatorGivenName
+          in: query
+          description: Return DDs that are associated with the creator with the given first name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Sean
+        - name: creatorEmail
+          in: query
+          description: Return DDs that are associated with the creator with the given email adress
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: jsmith@hawaii.edu
+        - name: creatorAffiliation
+          in: query
+          description: Return DDs that are associated with  creators at the given organization name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'University of Hawaiʻi at Manoa, Cyberinfrastructure'
+        - name: contributorID
+          in: query
+          description: Return DDs that are associated with the given contributor ID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 4798895188827368985-242ac1110-0001-012
+        - name: contributorName
+          in: query
+          description: 'Return DDs that are associated with the contributor with the given full name.  Format should be: family, given'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'Cleveland, Sean'
+        - name: contributorFamilyName
+          in: query
+          description: Return DDs that are associated with the contributor with the given last name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Cleveland
+        - name: contributorGivenName
+          in: query
+          description: Return DDs that are associated with the contributor with the given first name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Sean
+        - name: contributorEmail
+          in: query
+          description: Return DDs that are associated with the contributor with the given email adress
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: jsmith@hawaii.edu
+        - name: contributorAffiliation
+          in: query
+          description: Return DDs that are associated with the contributor at the given organization name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'University of Hawaiʻi at Manoa, Cyberinfrastructure'
+        - name: subject
+          in: query
+          description: Return DDs where subject field contains given terms
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 'ikewai, hydrology'
+        - name: data_state
+          in: query
+          description: 'Return DDs where the data is in the given state.  Options: Raw,Processed, Preliminary, Final, and Unknown'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Final
+        - name: resourceTypeGeneral
+          in: query
+          description: 'Return DDs where the data is of the given type.  Options: Figure, Map, Media, Dataset, Fileset, Poster, Paper, Preprint, Presentation, Thesis, Code, Books'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Code
+        - name: format
+          in: query
+          description: 'Return DDs where the data format is of the given type.  Ex: pdf, png, json'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: json
+        - name: rights
+          in: query
+          description: 'Return DDs where the data has the given license.  Options: Creative Commons Attribution CC BY, Creative Commons Attribution-ShareAlike CC BY-SA, Creative Commons Attribution-NoDerivs CC BY-ND, Creative Commons Attribution-NoCommercial-ShareAlike CC BY-NC-SA, Creative Commons Attribution-NoCommercial CC BY-NC, Creative Commons Attribution-NoCommercial-NoDerivs CC BY-NC-ND, Other'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Creative Commons Attribution CC BY
+        - name: startDate
+          in: query
+          description: 'Return DDs with the given start date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: endDate
+          in: query
+          description: 'Return DDs with the given end date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: dateCreated
+          in: query
+          description: 'Return DDs with the given creation date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: dateUpdated
+          in: query
+          description: 'Return DDs that were last updated on the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: isPushedToHydroshare
+          in: query
+          description: Return DDs with the given pushed-to-Hydroshare status
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: isStagedToHydroshare
+          in: query
+          description: Return DDs with the given staged-to-Hydroshare status
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: rejectedReasonHydroshare
+          in: query
+          description: Return DDs that were rejected from obtaining DOIs due to the given reason
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Missing description
+        - name: hydroshareResourceId
+          in: query
+          description: Return DDs with the given Hydroshare resource ID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 6ba10edf67b04b1ea636c4090853c678
+        - name: hasDOI
+          in: query
+          description: Return DDs that have a Hydroshare DOI
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: hydroshareDOI
+          in: query
+          description: Return DDs with the given Hydroshare DOI
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 10.4211/hs.d66ef2686787403698bac5368a29b056
+        - name: fileID
+          in: query
+          description: Return DDs that are associated with the given file ID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: 2693483528098606615-242ac113-0001-002
+        - name: fileName
+          in: query
+          description: Return DDs that are associated with a file with the given file name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: DiamondAndShereeRainwaterSamplingMaunaKea.jpg
+        - name: isPushedToIkewai
+          in: query
+          description: Return DDs that have been pushed to Ikewai.org
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: isStagedToIkewai
+          in: query
+          description: Return DDs that have been staged to Ikewai.org
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: isAnnotated
+          in: query
+          description: Return DDs that have been annotated/have metadata
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: pushedToAnnotatedRep
+          in: query
+          description: Return DDs that have been pushed to the Ikewai Gateway annotated repository
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: boolean
+            example: true
+        - name: createdBefore
+          in: query
+          description: 'Return DDs that were created before the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: createdAfter
+          in: query
+          description: 'Return DDs that were created after the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: updatedBefore
+          in: query
+          description: 'Return DDs that were last updated before the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: updatedAfter
+          in: query
+          description: 'Return DDs that were last updated after the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: startDateBefore
+          in: query
+          description: 'Return DDs where the data start date is before the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: startDateAfter
+          in: query
+          description: 'Return DDs where the data start date is after the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: endDateBefore
+          in: query
+          description: 'Return DDs where the data end date is before the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: endDateAfter
+          in: query
+          description: 'Return DDs where the data end date is after the given date. YYYY,YYYY-MM-DD, YYYY-MM-DDThh:mm:ssTZD or any other format or level of granularity.'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '2019-10-24'
+        - name: geoLocationBox
+          in: query
+          description: Return DDs with at least one location within the given bounding box
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '{"type":"box", "value": { northlimit: "${northlimit}" southlimit: "${southlimit}" eastlimit: "${eastlimit}" westlimit: "${westlimit}" units: "Decimal Degrees"}'
+        - name: geoLocationPoint
+          in: query
+          description: Return DDs at the given point
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: '{"type":"point", "value": { "east": "${longitude}", "north": "${latitude}", "units": "Decimal Degrees"}}'
+        - name: geoLocationPlace
+          in: query
+          description: Return DDs association with a location of the given name
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: Oahu
+      responses:
+        '200':
+          description: A list of all data descriptors.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataDescriptor'
+        '400':
+          description: User did not supply a UUID or supplied an invalid JSON query
+        '401':
+          description: User is not authorized.
+        '403':
+          description: Failed to authenticate the user.
+        '404':
+          description: The specified metadata cannot be found.
+        default:
+          description: The service was unable to query the metadata database.
+      security: []
+    post:
+      tags:
+        - dd
+      summary: Creates and returns a new data descriptor.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataDescriptor'
+        required: true
+      responses:
+        '201':
+          description: New Data Descriptor created
+        '400':
+          description: User supplied an invalid form
+        '401':
+          description: User is not authorized.
+        '403':
+          description: Failed to authenticate the user.
+        default:
+          description: The service was unable to query the metadata database.
+  '/dd/{uuid}':
+    get:
+      tags:
+        - dd
+      summary: Retrieve a specific Data Descriptor
+      description: Get a requested dd given its uuid
+      parameters:
+        - name: uuid
+          in: path
+          description: ID of DataDescriptor to retrieve
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The data descriptor with the given uuid.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataDescriptor'
+        '400':
+          description: User did not supply a UUID or supplied an invalid JSON query
+        '401':
+          description: User is not authorized.
+        '403':
+          description: Failed to authenticate the user.
+        '404':
+          description: The specified metadata cannot be found.
+        default:
+          description: The service was unable to query the metadata database.
+      security: []
+    put:
+      tags:
+        - dd
+      summary: Updates an existing data descriptor.
+      parameters:
+        - name: uuid
+          in: path
+          description: ID of Data Descriptor to update
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        description: The new content of the DD
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataDescriptor'
+        required: true
+      responses:
+        '200':
+          description: Data Descriptor updated
+        '400':
+          description: User supplied an invalid form
+        '401':
+          description: User is not authorized.
+        '403':
+          description: Failed to authenticate the user.
+        default:
+          description: The service was unable to query the metadata database.
+    delete:
+      tags:
+        - dd
+      summary: Delete the specified Data Descriptor
+      description: Delete a requested dd given its uuid
+      parameters:
+        - name: uuid
+          in: path
+          description: ID of DataDescriptor to delete
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The data descriptor with the given uuid has been deleted.
+        '400':
+          description: User did not supply a UUID or supplied an invalid JSON query
+        '401':
+          description: User is not authorized.
+        '403':
+          description: Failed to authenticate the user.
+        '404':
+          description: The specified metadata cannot be found.
+        default:
+          description: The service was unable to query the metadata database.
+components:
+  schemas:
+    DataDescriptor:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+  securitySchemes:
+    accessCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'http://example.com/oauth/auth'
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
