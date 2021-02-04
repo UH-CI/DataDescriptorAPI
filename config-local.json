@@ -6,5 +6,6 @@
   "local_dev":true,
   "tapis_base_url":"https://dev.develop.tapis.io",
   "test_username": "",
-  "test_password": ""
+  "test_password": "",
+  "test_tenant_id":"dev"
 }
